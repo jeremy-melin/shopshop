@@ -1,24 +1,26 @@
 <template>
     <div>
-        <el-input-number v-model="num" :min="0" :max="stock" @change="handleChange" />
+        <el-input-number :model-value="quantity" :min="0" :max="stock" @change="handleChange" />
     </div>
 </template>
 
 <script lang="ts" setup>
 import { ElInputNumber } from 'element-plus';
-import { ref } from 'vue';
 
 const props = defineProps({
   stock: {type: Number, required: true},
-  productId: {type: Number, required: true}
+  productId: {type: String, required: true},
+  quantity: {type: Number, required: false}
 });
 
 const emit = defineEmits<{
-  remove: [id: number]
+  remove: [id: string],
+  update: [quantity: number],
 }>();
 
-const num = ref(1);
 const handleChange = (value: number) => {
+  emit('update', value);
+
   if (value === 0) {
     emit('remove', props.productId);
   }

@@ -2,7 +2,7 @@
     <div>
         ORDER SUMMARY
 
-        <div>Articles dans le panier : {{ numberOfItemsInCart}}</div>
+        <div>Articles dans le panier : {{ numberOfItemsInCart }}</div>
         <div>Prix total : {{ totalPrice }}</div>
     </div>
 </template>

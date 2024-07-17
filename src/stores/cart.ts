@@ -6,12 +6,12 @@ export const useCartStore = defineStore('cart', () => {
     const itemsInCart: Ref<CartItem[]> = ref([]);
     const numberOfItemsInCart = computed(() => 
         itemsInCart.value.reduce((acc: number, curr: CartItem) => 
-            { return +acc + 1}, 0
+            { return +acc + curr.quantity}, 0
         )
     );
     const totalPrice = computed(() => 
         itemsInCart.value.reduce((acc: number, curr: CartItem) => 
-            { return +acc + +curr.price}, 0
+            { return +acc + +curr.price * curr.quantity}, 0
         )
     );
 
@@ -20,14 +20,26 @@ export const useCartStore = defineStore('cart', () => {
     }
 
     function addItemToCart(newItem: CartItem) {
-        itemsInCart.value = [...itemsInCart.value, newItem];
+        if (itemsInCart.value.find(item => item.id === newItem.id)) {
+            const index = itemsInCart.value.findIndex(item => item.id === newItem.id);
+            itemsInCart.value[index].quantity++;
+        } else {
+            itemsInCart.value = [...itemsInCart.value, {...newItem, quantity: 1}];
+        }
+    }
+
+    function updateQuantity(id: number, quantity: number) {
+        const index = itemsInCart.value.findIndex(item => item.id === id);
+        itemsInCart.value[index].quantity = quantity;
     }
 
     return {
+        itemsInCart,
         numberOfItemsInCart,
         totalPrice,
         removeItemFromCart,
-        addItemToCart
+        addItemToCart,
+        updateQuantity
     }
 
 });
