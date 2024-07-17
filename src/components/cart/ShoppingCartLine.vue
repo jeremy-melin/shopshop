@@ -13,8 +13,11 @@
                     @update="updateQuantity($event)"
                 />            
             </el-col>
-            <el-col :span="6" class="align-right">
+            <el-col :span="4" class="align-right">
                 {{ item.price }} €
+            </el-col>
+            <el-col :span="2" class="align-right">
+                <el-button @click="removeItem(item.id)">x</el-button>
             </el-col>
         </el-row>
     </div>
@@ -23,7 +26,7 @@
 import type { CartItem } from '@/stores/interfaces/CartItem';
 import QuantitySelector from './QuantitySelector.vue';
 import { useCartStore } from '@/stores/cart';
-import { ElRow, ElCol } from 'element-plus';
+import { ElRow, ElCol, ElButton } from 'element-plus';
 
 const store = useCartStore();
 

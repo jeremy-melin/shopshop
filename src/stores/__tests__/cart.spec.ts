@@ -39,3 +39,4 @@ describe('Cart Store', () => {
     expect(store.totalPrice).toBe(13);
   });
 });
+
