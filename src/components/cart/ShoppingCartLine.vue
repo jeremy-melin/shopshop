@@ -1,6 +1,14 @@
 <template>
     <div>
-        {{ item.id }}  <QuantitySelector :stock="item.stock" :product-id="item.id" :quantity="item.quantity" @remove="removeItem($event)" @update="updateQuantity($event)"/>
+        {{ item.id }}  
+        
+        <QuantitySelector 
+            :stock="item.stock" 
+            :product-id="item.id" 
+            :quantity="item.quantity" 
+            @remove="removeItem($event)" 
+            @update="updateQuantity($event)"
+        />
     </div>
 </template>
 <script setup lang="ts">

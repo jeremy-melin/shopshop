@@ -22,7 +22,7 @@ export const useCartStore = defineStore('cart', () => {
     function addItemToCart(newItem: CartItem) {
         if (itemsInCart.value.find(item => item.id === newItem.id)) {
             const index = itemsInCart.value.findIndex(item => item.id === newItem.id);
-            itemsInCart.value[index].quantity++;
+            if (itemsInCart.value[index].quantity !== itemsInCart.value[index].stock) itemsInCart.value[index].quantity++;
         } else {
             itemsInCart.value = [...itemsInCart.value, {...newItem, quantity: 1}];
         }
@@ -30,7 +30,9 @@ export const useCartStore = defineStore('cart', () => {
 
     function updateQuantity(id: number, quantity: number) {
         const index = itemsInCart.value.findIndex(item => item.id === id);
-        itemsInCart.value[index].quantity = quantity;
+        if (quantity <= itemsInCart.value[index].stock) {
+            itemsInCart.value[index].quantity = quantity;
+        }
     }
 
     return {
